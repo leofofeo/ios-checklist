@@ -50,6 +50,12 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         
         lists = loadDummyData()
         
+        for list in lists {
+            let item = ChecklistItem()
+            item.text = "Item for \(list.name)"
+            list.items.append(item)
+        }
+        
         navigationController?.navigationBar.prefersLargeTitles = true
     }
 

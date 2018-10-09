@@ -11,7 +11,7 @@ import UIKit
 class Checklist: NSObject {
 
     var name = ""
-    
+    var items = [ChecklistItem]()
     var lists = [Checklist]()
     
     init(name: String) {
