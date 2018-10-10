@@ -15,9 +15,9 @@ class Checklist: NSObject, Codable {
     var lists = [Checklist]()
     var iconName = "No Icon"
     
-    init(name: String, iconName: String = "No Icon") {
+    init(name: String) {
         self.name = name
-        self.iconName = iconName
+//        self.iconName = iconName
         super.init()
     }
     

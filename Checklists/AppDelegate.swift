@@ -20,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController = window!.rootViewController as! UINavigationController
         let controller = navigationController.viewControllers[0] as! AllListsViewController
         controller.dataModel = dataModel
+        window?.tintColor = UIColor.init(red: 4, green: 169, blue: 235, alpha: 1)
+        
         return true
     }
 
