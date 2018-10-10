@@ -20,6 +20,12 @@ class DataModel {
         }
     }
     
+    init(){
+        loadChecklists()
+        registerDefaults()
+        handleFirstTime()
+    }
+    
     func documentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
@@ -52,6 +58,7 @@ class DataModel {
             do {
                 
                 lists = try decoder.decode([Checklist].self, from: data)
+                sortChecklists()
             } catch {
                 print ("Error decoding item array!")
             }
@@ -78,9 +85,11 @@ class DataModel {
         }
     }
     
-    init(){
-        loadChecklists()
-        registerDefaults()
-        handleFirstTime()
+    func sortChecklists() {
+        lists.sort(by: {checklist1, checklist2 in
+            return checklist1.name.localizedStandardCompare(checklist2.name) == .orderedAscending
+        })
     }
+    
+    
 }
