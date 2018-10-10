@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate {
+class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate, UINavigationControllerDelegate {
     
     var dataModel: DataModel!
 
@@ -48,10 +48,25 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
-        dataModel.lists = loadDummyData()
     
         navigationController?.navigationBar.prefersLargeTitles = true
+        // print("hello from viewDidLoad() in \(self)")
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        navigationController?.delegate = self
+        
+//        print("hello from viewDidAppear() in \(self)")
+        
+        let index = dataModel.indexOfSelectedChecklist
+        
+        if index >= 0 && index < dataModel.lists.count {
+            let checklist = dataModel.lists[index]
+            performSegue(withIdentifier: "ShowChecklist", sender: checklist)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -87,6 +102,8 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        dataModel.indexOfSelectedChecklist = indexPath.row
+        
         let checklist = dataModel.lists[indexPath.row]
         performSegue(withIdentifier: "ShowChecklist", sender: checklist)
     }
@@ -99,6 +116,8 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
             let controller = segue.destination as! ListDetailViewController
             controller.delegate = self
         }
+        
+//        print("hello from prepare(for segue) in \(self)")
     }
     
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
@@ -119,25 +138,10 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         }
     }
     
-    func loadDummyData() -> [Checklist] {
-        var lists = [Checklist]()
-        
-        var list = Checklist(name: "Birthdays")
-        lists.append(list)
-        
-        list = Checklist(name: "Groceries")
-        lists.append(list)
-        
-        list = Checklist(name: "Cool Apps")
-        lists.append(list)
-        
-        list = Checklist(name: "To Do")
-        lists.append(list)
-        
-        list = Checklist(name: "Emails to send")
-        lists.append(list)
-        
-        return lists
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        if viewController === self {
+            dataModel.indexOfSelectedChecklist = -1
+        }
     }
     
 }

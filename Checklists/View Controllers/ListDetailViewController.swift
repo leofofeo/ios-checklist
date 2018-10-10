@@ -35,16 +35,21 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate {
             textField.text = checklist.name
             doneBarButton.isEnabled = true
         }
+        
+//        print("hello from viewDidLoad() in \(self)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         textField.becomeFirstResponder()
+        
+//        print("hello from viewWillAppear() in \(self)")
     }
     
     // MARK:- Actions
     @IBAction func cancel(){
         delegate?.listDetailViewControllerDidCancel(self)
+//        print("hello from cancel() in \(self)")
     }
     
     @IBAction func done() {
@@ -55,6 +60,8 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate {
             let checklist = Checklist(name: textField.text!)
             delegate?.listDetailViewController(self, didFinishAdding: checklist)
         }
+        
+//        print("hello from done() in \(self)")
     }
     
     // MARK:- TableViewDelegates
