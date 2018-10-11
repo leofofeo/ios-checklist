@@ -42,7 +42,6 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         
     
         navigationController?.navigationBar.prefersLargeTitles = true
-        // print("hello from viewDidLoad() in \(self)")
         
     }
     
@@ -50,8 +49,6 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         super.viewDidAppear(animated)
         
         navigationController?.delegate = self
-        
-//        print("hello from viewDidAppear() in \(self)")
         
         let index = dataModel.indexOfSelectedChecklist
         
